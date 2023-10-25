@@ -1,0 +1,24 @@
+- Warning: Couldn't affix, found warning characters: 'Testing not found {} () string' -> test.blade.php:19
+ -----
+- Warning: Couldn't affix, found warning characters: '% Percent %' -> test.blade.php:20
+ -----
+- Warning: Couldn't affix, found warning characters: 'Testing 'single' quotes' -> test.blade.php:21
+ -----
+- Warning: Couldn't affix, found warning characters: 'Testing single 'quotes'' -> test.blade.php:22
+ -----
+- Warning: Couldn't affix, found warning characters: 'Veelgestelde vragen over {{$serviceName}}' -> test.blade.php:80
+ -----
+- Warning: Couldn't affix, found warning characters: '{{$serviceName}}' -> test.blade.php:84, 90
+ -----
+- Warning: Couldn't affix, found warning characters: '
+
+    {{-- Blade comment --}}
+
+' -> test.blade.php:
+ -----
+- Warning: Couldn't affix, found warning characters: 'Some text with 'quotes'' -> test.blade.php:23
+ -----
+- Warning: Couldn't affix: 'placeholder' in placeholder attribute not allowed -> test.blade.php:39
+ -----
+- Warning: Couldn't affix, found warning characters: 'John with 'single'' -> test.blade.php:25
+ -----
