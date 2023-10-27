@@ -23,8 +23,8 @@ class HtmlStringsAffixer {
     // Open - Closed
     extractText() {
 	    // set affixes for simple strings extraction
-        this.extPrefix = `(\<[^\/]([A-Za-z0-9]{0,10})\>)`
-        this.extSuffix = `(\<\/([A-Za-z0-9]{0,10})\>)`
+        this.extPrefix = `\\>`
+        this.extSuffix = `\\<\\/[A-Za-z0-9]{0,10}\\>`
 	    // Generates regex based on prefix, suffix and denied characters
         this.generateRegex()
 	    // Parses content and adds strings in foundStrings with specific type
@@ -34,27 +34,30 @@ class HtmlStringsAffixer {
     generateRegex() {
         if (this.extPrefix && this.extSuffix) {
             let deniedCharString = this.ignoreChars.join("\\")
-            let regexp = new RegExp(this.extPrefix + `[^${deniedCharString}]+[A-Za-z0-9][^${deniedCharString}]+` + `[^${deniedCharString}]` + this.extSuffix);
+            let regexp = new RegExp(this.extPrefix + `([^${deniedCharString}]+)` + this.extSuffix);
             this.searchRegex = regexp.source; // Gets the pattern string of the regexp
         }
     }
 
     parseContent(htmlType) {
-        // find all strings based on regex
-        const submatchall = this.content.match(`(\<\/([A-Za-z0-9]{0,10})\>)`) || [];
-        console.log(this.searchRegex)
+        const regex = new RegExp(this.searchRegex, 'g');  // Ensure 'g' flag is set
+        let match;
         
-        submatchall.forEach(element => {
+        console.log(this.searchRegex)
+
+        while ((match = regex.exec(this.content)) !== null) {
+            let element = match[0]; // full match
+            
             // removes (trims) finding prefix and suffix
             let found = this.removeParsePrefix(element);
             found = this.removeParseSuffix(found);
-
+    
             // add as a new string if no duplicates found
             if (!this.checkDuplicate(found, htmlType)) {
                 const lines = this.findLineOfString(element);
                 this.addNewString(found, element, htmlType, lines.join(", "));
             }
-        });
+        }
     }
 
     // Cleanup START
