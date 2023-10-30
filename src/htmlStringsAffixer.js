@@ -7,7 +7,13 @@ class HtmlStringsAffixer {
         this.suffix = config.suffix || "') }}";
         this.ignoreChars = config.ignore || ["#", "_", ">", "^", "*", "="];
         this.warningChars = config.warnings || ["%", "{", "(", "}", ")", "$", "'"];
-        this.extractions = config.extractions || ["text", "placeholder", "alt", "title", "hashtag"];
+        this.extractions = config.extractions || [
+            // "text", 
+            "placeholder", 
+            // "alt", 
+            // "title", 
+            // "hashtag"
+    ];
 
         // Properties
         this.content = fileContent || ""
@@ -57,15 +63,16 @@ class HtmlStringsAffixer {
 
     // HTML input's Placeholders attributes extraction method
     extractPlaceholder() {
-        this.extPrefix = `(?i)placeholder=(\"|')`;
-        this.extSuffix = `(\"|')(\s|/|>)`;
+        
+        this.extPrefix = `placeholder\\s*=\\s*("|')`;
+        this.extSuffix = `(\"|')\\s*(\\/|>)`;
         this.generateRegex();
         this.parseContent("placeholder");
     }
 
     // HTML img's alt attributes extraction method
     extractAlt() {
-        this.extPrefix = `(?i)alt=(\"|')`;
+        this.extPrefix = `alt=(\"|')`;
         this.extSuffix = `(\"|')(\s|/|>)`;
         this.generateRegex();
         this.parseContent("alt");
@@ -73,7 +80,7 @@ class HtmlStringsAffixer {
 
     // HTML title attributes extraction method
     extractTitle() {
-        this.extPrefix = `(?i)title=(\"|')`;
+        this.extPrefix = `title=(\"|')`;
         this.extSuffix = `(\"|')(\s|/|>)`;
         this.generateRegex();
         this.parseContent("title");
@@ -90,23 +97,16 @@ class HtmlStringsAffixer {
     generateRegex() {
         if (this.extPrefix && this.extSuffix) {
             let deniedCharString = this.ignoreChars.join("\\");
-            let caseInsensitiveFlag = this.extPrefix.includes("(?i)") || this.extSuffix.includes("(?i)");
-            this.extPrefix = this.extPrefix.replace("(?i)", "");
-            this.extSuffix = this.extSuffix.replace("(?i)", "");
             
-            let regexp;
-            if (caseInsensitiveFlag) {
-                regexp = new RegExp(this.extPrefix + `([^${deniedCharString}]+)` + this.extSuffix, "i");
-            } else {
-                regexp = new RegExp(this.extPrefix + `([^${deniedCharString}]+)` + this.extSuffix);
-            }
+            let regexp = new RegExp(this.extPrefix + `([^${deniedCharString}]+)` + this.extSuffix);
     
             this.searchRegex = regexp.source; // Gets the pattern string of the regexp
         }
     }
 
     parseContent(htmlType) {
-        const regex = new RegExp(this.searchRegex, 'g');  // Ensure 'g' flag is set
+        const regexFlags = ["placeholder", "alt", "title"].includes(htmlType) ? "gi" : "g"
+        const regex = new RegExp(this.searchRegex, regexFlags);  // Ensure 'g' flag is set for global
         let match;
         
         console.log(this.searchRegex)
