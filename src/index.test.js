@@ -12,7 +12,7 @@ describe('HtmlStringsAffixer', () => {
 
     test('It should affix strings correctly', () => {
         const affixer = new HtmlStringsAffixer();
-        const { result, warnings } = affixer.affix(htmlContent);
+        const result = affixer.affixIt(htmlContent);
         
         // Add your assertions here...
         expect(result).toContain(resultHtmlContent);

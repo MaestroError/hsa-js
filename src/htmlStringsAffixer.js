@@ -31,10 +31,76 @@ class HtmlStringsAffixer {
 	    this.parseContent("text")
     }
 
+    // opening tag <-> opening tag text extraction
+    extractTextOO() {
+        this.extPrefix = `(\<[^\/](.{0,10})\>)`;
+        this.extSuffix = `(\<[^\/](.{0,10})\>)`;
+        this.generateRegex();
+        this.parseContent("text");
+    }
+
+    // closing tag <-> closing tag text extraction
+    extractTextCC() {
+        this.extPrefix = `(\\<\\/[A-Za-z0-9]{0,10}\\>)`;
+        this.extSuffix = `(\\<\\/[A-Za-z0-9]{0,10}\\>)`;
+        this.generateRegex();
+        this.parseContent("text");
+    }
+
+    // closing tag <-> opening tag text extraction
+    extractTextCO() {
+        this.extPrefix = `(\\<\\/[A-Za-z0-9]{0,10}\\>)`;
+        this.extSuffix = `(\<[^\/](.{0,10})\>)`;
+        this.generateRegex();
+        this.parseContent("text");
+    }
+
+    // HTML input's Placeholders attributes extraction method
+    extractPlaceholder() {
+        this.extPrefix = `(?i)placeholder=(\"|')`;
+        this.extSuffix = `(\"|')(\s|/|>)`;
+        this.generateRegex();
+        this.parseContent("placeholder");
+    }
+
+    // HTML img's alt attributes extraction method
+    extractAlt() {
+        this.extPrefix = `(?i)alt=(\"|')`;
+        this.extSuffix = `(\"|')(\s|/|>)`;
+        this.generateRegex();
+        this.parseContent("alt");
+    }
+
+    // HTML title attributes extraction method
+    extractTitle() {
+        this.extPrefix = `(?i)title=(\"|')`;
+        this.extSuffix = `(\"|')(\s|/|>)`;
+        this.generateRegex();
+        this.parseContent("title");
+    }
+
+    // Extracts "#text" type (selected) strings
+    extractHashtag() {
+        this.extPrefix = `(\"|'|>)\\s*#`;
+        this.extSuffix = `(\"|'|<)(\s|/|>)`;
+        this.generateRegex();
+        this.parseContent("hashtag");
+    }
+
     generateRegex() {
         if (this.extPrefix && this.extSuffix) {
-            let deniedCharString = this.ignoreChars.join("\\")
-            let regexp = new RegExp(this.extPrefix + `([^${deniedCharString}]+)` + this.extSuffix);
+            let deniedCharString = this.ignoreChars.join("\\");
+            let caseInsensitiveFlag = this.extPrefix.includes("(?i)") || this.extSuffix.includes("(?i)");
+            this.extPrefix = this.extPrefix.replace("(?i)", "");
+            this.extSuffix = this.extSuffix.replace("(?i)", "");
+            
+            let regexp;
+            if (caseInsensitiveFlag) {
+                regexp = new RegExp(this.extPrefix + `([^${deniedCharString}]+)` + this.extSuffix, "i");
+            } else {
+                regexp = new RegExp(this.extPrefix + `([^${deniedCharString}]+)` + this.extSuffix);
+            }
+    
             this.searchRegex = regexp.source; // Gets the pattern string of the regexp
         }
     }
@@ -151,12 +217,26 @@ class HtmlStringsAffixer {
     // Helpers END
 
     affixIt(htmlText) {
-        let result = "";
         this.content = htmlText
         this.originalContent = htmlText
         if (this.content) {
             if(this.extractions.includes("text")) {
                 this.extractText()
+                this.extractTextOO()
+                this.extractTextCC()
+                this.extractTextCO()
+            }
+            if(this.extractions.includes("placeholder")) {
+                this.extractPlaceholder()
+            }
+            if(this.extractions.includes("alt")) {
+                this.extractAlt()
+            }
+            if(this.extractions.includes("title")) {
+                this.extractTitle()
+            }
+            if(this.extractions.includes("hashtag")) {
+                this.extractHashtag()
             }
         }
 
