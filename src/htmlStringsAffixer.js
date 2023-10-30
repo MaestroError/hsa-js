@@ -8,11 +8,11 @@ class HtmlStringsAffixer {
         this.ignoreChars = config.ignore || ["#", "_", ">", "^", "*", "="];
         this.warningChars = config.warnings || ["%", "{", "(", "}", ")", "$", "'"];
         this.extractions = config.extractions || [
-            // "text", 
+            "text", 
             "placeholder", 
-            // "alt", 
-            // "title", 
-            // "hashtag"
+            "alt", 
+            "title", 
+            "hashtag"
     ];
 
         // Properties
@@ -87,20 +87,27 @@ class HtmlStringsAffixer {
     }
 
     // Extracts "#text" type (selected) strings
+    // Note: This extraction doesn't uses ignore characters
     extractHashtag() {
-        this.extPrefix = `(\"|'|>)\\s*#`;
-        this.extSuffix = `(\"|'|<)(\s|/|>)`;
+
+        this.extPrefix = `(?<=[">\\s])#`;
+        this.extSuffix = `(?=["'<\\/])`;
         this.generateRegex();
         this.parseContent("hashtag");
     }
 
+
     generateRegex() {
         if (this.extPrefix && this.extSuffix) {
             let deniedCharString = this.ignoreChars.join("\\");
-            
-            let regexp = new RegExp(this.extPrefix + `([^${deniedCharString}]+)` + this.extSuffix);
-    
-            this.searchRegex = regexp.source; // Gets the pattern string of the regexp
+
+            // If extracting hashtags, form the regex slightly differently.
+            if (this.extPrefix.includes("#")) {
+                this.searchRegex = `${this.extPrefix}(.*?)${this.extSuffix}`;
+            } else {
+                this.searchRegex = `${this.extPrefix}([^${deniedCharString}]+)${this.extSuffix}`;
+            }
+
         }
     }
 
@@ -128,9 +135,17 @@ class HtmlStringsAffixer {
 
     // Cleanup START
     removeParsePrefix(element) {
+        // If extracting hashtags, directly return the element as prefix is just a lookbehind
+        if (this.extPrefix.includes("#")) {
+            return element;
+        }
+
         // find all occurrences
         const re = new RegExp(this.extPrefix, 'g');
         const foundSlice = element.match(re) || [];
+
+        console.log(re, foundSlice, element);
+
 
         // Check if foundSlice is empty
         if (foundSlice.length === 0) {
@@ -141,6 +156,11 @@ class HtmlStringsAffixer {
     }
 
     removeParseSuffix(element) {
+        // If extracting hashtags, directly return the element as suffix is just a lookahead
+        if (this.extPrefix.includes("#")) {
+            return element;
+        }
+
         // find all occurrences
         const re = new RegExp(this.extSuffix, 'g');
         const foundSlice = element.match(re) || [];
