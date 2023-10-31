@@ -34,8 +34,10 @@ class HtmlStringsAffixer {
         this.extSuffix = `\\<\\/[A-Za-z0-9]{0,10}\\>`
 	    // Generates regex based on prefix, suffix and denied characters
         this.generateRegex()
-	    // Parses content and adds strings in foundStrings with specific type
-	    this.parseContent("text")
+	    // Parses content, sets regex flags and adds strings in foundStrings with specific type
+        let htmlType = "text"
+        this.setRegexFlags(htmlType)
+	    this.parseContent(htmlType)
     }
 
     // opening tag <-> opening tag text extraction
@@ -43,7 +45,10 @@ class HtmlStringsAffixer {
         this.extPrefix = `(\<[^\/](.{0,10})\>)`;
         this.extSuffix = `(\<[^\/](.{0,10})\>)`;
         this.generateRegex();
-        this.parseContent("text");
+	    // Parses content, sets regex flags and adds strings in foundStrings with specific type
+        let htmlType = "text"
+        this.setRegexFlags(htmlType)
+	    this.parseContent(htmlType)
     }
 
     // closing tag <-> closing tag text extraction
@@ -51,7 +56,10 @@ class HtmlStringsAffixer {
         this.extPrefix = `(\\<\\/[A-Za-z0-9]{0,10}\\>)`;
         this.extSuffix = `(\\<\\/[A-Za-z0-9]{0,10}\\>)`;
         this.generateRegex();
-        this.parseContent("text");
+	    // Parses content, sets regex flags and adds strings in foundStrings with specific type
+        let htmlType = "text"
+        this.setRegexFlags(htmlType)
+	    this.parseContent(htmlType)
     }
 
     // closing tag <-> opening tag text extraction
@@ -59,7 +67,10 @@ class HtmlStringsAffixer {
         this.extPrefix = `(\\<\\/[A-Za-z0-9]{0,10}\\>)`;
         this.extSuffix = `(\<[^\/](.{0,10})\>)`;
         this.generateRegex();
-        this.parseContent("text");
+	    // Parses content, sets regex flags and adds strings in foundStrings with specific type
+        let htmlType = "text"
+        this.setRegexFlags(htmlType)
+	    this.parseContent(htmlType)
     }
 
     // HTML input's Placeholders attributes extraction method
@@ -68,7 +79,10 @@ class HtmlStringsAffixer {
         this.extPrefix = `placeholder\\s*=\\s*("|')`;
         this.extSuffix = `(\"|')\\s*(\\/|>)`;
         this.generateRegex();
-        this.parseContent("placeholder");
+	    // Parses content, sets regex flags and adds strings in foundStrings with specific type
+        let htmlType = "placeholder"
+        this.setRegexFlags(htmlType)
+	    this.parseContent(htmlType)
     }
 
     // HTML img's alt attributes extraction method
@@ -76,7 +90,10 @@ class HtmlStringsAffixer {
         this.extPrefix = `alt=(\"|')`;
         this.extSuffix = `(\"|')(\s|/|>)`;
         this.generateRegex();
-        this.parseContent("alt");
+	    // Parses content, sets regex flags and adds strings in foundStrings with specific type
+        let htmlType = "alt"
+        this.setRegexFlags(htmlType)
+	    this.parseContent(htmlType)
     }
 
     // HTML title attributes extraction method
@@ -84,7 +101,10 @@ class HtmlStringsAffixer {
         this.extPrefix = `title=(\"|')`;
         this.extSuffix = `(\"|')(\s|/|>)`;
         this.generateRegex();
-        this.parseContent("title");
+	    // Parses content, sets regex flags and adds strings in foundStrings with specific type
+        let htmlType = "title"
+        this.setRegexFlags(htmlType)
+	    this.parseContent(htmlType)
     }
 
     // Extracts "#text" type (selected) strings
@@ -94,7 +114,10 @@ class HtmlStringsAffixer {
         this.extPrefix = `(?<=[">\\s])#`;
         this.extSuffix = `(?=["'<\\/])`;
         this.generateRegex();
-        this.parseContent("hashtag");
+	    // Parses content, sets regex flags and adds strings in foundStrings with specific type
+        let htmlType = "hashtag"
+        this.setRegexFlags(htmlType)
+	    this.parseContent(htmlType)
     }
 
 
@@ -113,8 +136,8 @@ class HtmlStringsAffixer {
     }
 
     parseContent(htmlType) {
-        const regexFlags = ["placeholder", "alt", "title"].includes(htmlType) ? "gi" : "g"
-        const regex = new RegExp(this.searchRegex, regexFlags);  // Ensure 'g' flag is set for global
+        this.setRegexFlags(htmlType)
+        const regex = new RegExp(this.searchRegex, this.regexFlags);  // Ensure 'g' flag is set for global
         let match;
         
         // console.log(this.searchRegex)
@@ -142,7 +165,7 @@ class HtmlStringsAffixer {
         }
 
         // find all occurrences
-        const re = new RegExp(this.extPrefix, 'g');
+        const re = new RegExp(this.extPrefix, this.regexFlags);
         const foundSlice = element.match(re) || [];
 
         // console.log(re, foundSlice, element);
@@ -163,7 +186,7 @@ class HtmlStringsAffixer {
         }
 
         // find all occurrences
-        const re = new RegExp(this.extSuffix, 'g');
+        const re = new RegExp(this.extSuffix, this.regexFlags);
         const foundSlice = element.match(re) || [];
 
         // Check if foundSlice is empty
@@ -235,6 +258,20 @@ class HtmlStringsAffixer {
         return foundOnLines.map(String); // Convert line numbers to strings
     }
 
+    checkWarningCharacters(elem) {
+        let foundChars = []
+        this.warningChars.forEach((char) => {
+            if (elem["found"].includes(char)) {
+                foundChars.push(char)
+            }
+        })
+        return foundChars
+    }
+
+    setRegexFlags(htmlType) {
+        this.regexFlags = ["placeholder", "alt", "title"].includes(htmlType) ? "gi" : "g"
+    }
+
     // Helpers END
 
     affixIt(htmlText) {
@@ -263,7 +300,7 @@ class HtmlStringsAffixer {
 
         this.replace();
 
-        // console.log(this.foundStrings)
+        console.log(this.foundStrings)
         // console.log(this.warnings)
         // console.log(this.content)
 
@@ -271,19 +308,41 @@ class HtmlStringsAffixer {
     }
 
     replace() {
-        // check for placeholder warning
-        // check warning characters and exclude from replacement
+        
         // replace
         let count = 0
-        let replacer = new HtmlReplacer(this.prefix, this.suffix, this.content, true);
+        let replacer = new HtmlReplacer(this.prefix, this.suffix, this.content, false);
+        // Loop over found strings
         this.foundStrings.data.forEach((element) => {
-            let result = replacer.replace(element);
-            if (result) {
-                count++
+            let approved = true
+            let result;
+
+            // Check "placeholder" placeholder
+            if (element["found"].toLowerCase() == "placeholder") {
+                let msg = "warning: 'placeholder' in placeholder attribute not allowed -> " + element["found"] + " on line: " + element["lines"]
+                this.warnings.push(msg);
+                approved = false
+            }
+
+            // check warning characters and exclude from replacement
+            let foundWarningChars = this.checkWarningCharacters(element)
+
+            if (foundWarningChars.length > 0) {
+                this.warnings.push("Warning! Found " + foundWarningChars.toString() + " characters: " + element["found"] + " on line: " + element["line"]);
+                approved = false
+            }
+            
+            if (approved) {
+                result = replacer.replace(element);
+                if (result) {
+                    count++
+                }
             }
         })
         // count and report
         // return replaced content
+        console.log(replacer.getContent());
+        console.log(this.warnings);
         return { data: replacer.getContent(), replaced: count}
     }
 

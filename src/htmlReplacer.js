@@ -10,31 +10,41 @@ class HtmlReplacer {
         let str = element["originalString"];
         let originalString = element["originalString"];
         let found = element["found"].trim();
-
+    
         if (element["type"] === "hashtag") {
             // Using the replace method to remove only the first occurrence of the "#" character
             str = str.replace("#", "");
+            
+            // Update 'found' after removing the first hashtag
+            found = found.replace("#", "").trim();
         }
 
+
+        // Skip empty strings
+        if (found.length == 0) {
+            return false;
+        }
+    
         let startIndex = str.indexOf(found);
         if (startIndex > -1) {
             str = str.substring(0, startIndex) + this.prefix + str.substring(startIndex);
             let endIndex = str.indexOf(found) + found.length;
             str = str.substring(0, endIndex) + this.suffix + str.substring(endIndex);
-
+    
             this.content = this.content.split(originalString).join(str);
 
+    
             if (this.debug) {
                 console.log("Replaced: ", element);
             }
-
+    
             return true;
         }
-
+    
         if (this.debug) {
             console.log("Not replaced: ", element);
         }
-
+    
         return false;
     }
 

@@ -47,7 +47,7 @@
     <input type="submit" value=" #value" />
     <input type="submit" value=" # Recived" />
     <!-- XX it ignores this string because of duplicate check - SOLVED! -->
-    <p>#John with double quotes</p>
+    <p>#John but no quotes</p>
 
     <!-- Title extraction (with double quotes) -->
     <p title='John "ShotGun" Nelson'>John with double quotes</p>

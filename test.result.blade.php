@@ -13,7 +13,7 @@
     <p>{{ __('Testing number 1245') }}</p>
     
     <!-- Some ignoring characters test -->
-    <p>#hastag double #</p>
+    <p>{{ __('hastag double #') }}</p>
     <p>_underscore _</p>
     <!-- Some warning characters test -->
     <p>Testing not found {} () string</p>
@@ -22,7 +22,7 @@
     <p>Testing single 'quotes'</p>
     <input placeholder="Some text with 'quotes'" />
     <!-- XX Cant find last single quoted word - SOLVED! -->
-    <p>#John with 'single'</p>
+    <p>{{ __('John with') }} 'single'</p>
 
 
     <!-- Other tests -->
@@ -45,9 +45,9 @@
     <!-- Hashtag extraction -->
     <input type="submit" value="{{ __('Send') }}" />
     <input type="submit" value=" {{ __('value') }}" />
-    <input type="submit" value="  {{ __('Recived') }}" />
+    <input type="submit" value=" {{ __('Recived') }}" />
     <!-- XX it ignores this string because of duplicate check - SOLVED! -->
-    <p>{{ __('John with double quotes') }}</p>
+    <p>{{ __('John but no quotes') }}</p>
 
     <!-- Title extraction (with double quotes) -->
     <p title='{{ __('John "ShotGun" Nelson') }}'>{{ __('John with double quotes') }}</p>
@@ -56,7 +56,7 @@
     <p title='{{ __('John "ShotGun" Nelson') }}'>{{ __('John with "double" quotes') }}</p>
 
     <!-- XX Didn't removes hashtag after replace - SOLVED! -->
-    <p>{{ __('John with "double"') }}</p>
+    <p>{{ __('John with') }} "double"</p>
 
     <input Placeholder='{{ __('Some "text" - 2') }}' />
 
@@ -66,7 +66,7 @@
     <!-- XX Didn't finds with regex - SOLVED! (new regex) -->
     <div class="ps-product__badge">
         <!-- XX Didn't finds with regex (v4) shorter then 4 -->
-        <div class="ps-badge ps-badge--hot">Hot</div>
+        <div class="ps-badge ps-badge--hot">{{ __('Hot') }}</div>
     </div>
 
     <!-- XX Didn't finds with regex if starting or ending with space - SOLVED! (With 3rd version of regex) -->
