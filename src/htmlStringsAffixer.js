@@ -1,3 +1,4 @@
+import HtmlReplacer from './htmlReplacer.js';
 class HtmlStringsAffixer {
 
 
@@ -13,7 +14,7 @@ class HtmlStringsAffixer {
             "alt", 
             "title", 
             "hashtag"
-    ];
+        ];
 
         // Properties
         this.content = fileContent || ""
@@ -116,7 +117,7 @@ class HtmlStringsAffixer {
         const regex = new RegExp(this.searchRegex, regexFlags);  // Ensure 'g' flag is set for global
         let match;
         
-        console.log(this.searchRegex)
+        // console.log(this.searchRegex)
 
         while ((match = regex.exec(this.content)) !== null) {
             let element = match[0]; // full match
@@ -144,7 +145,7 @@ class HtmlStringsAffixer {
         const re = new RegExp(this.extPrefix, 'g');
         const foundSlice = element.match(re) || [];
 
-        console.log(re, foundSlice, element);
+        // console.log(re, foundSlice, element);
 
 
         // Check if foundSlice is empty
@@ -260,41 +261,30 @@ class HtmlStringsAffixer {
             }
         }
 
-        console.log(this.foundStrings)
-        console.log(this.warnings)
-        console.log(this.content)
+        this.replace();
+
+        // console.log(this.foundStrings)
+        // console.log(this.warnings)
+        // console.log(this.content)
 
         return this.content;
     }
 
-    affix(htmlText) {
-        const regex = />([^<]+)</g;
-        let matches;
-        let warnings = [];
-        let result = htmlText;
-
-        while ((matches = regex.exec(htmlText)) !== null) {
-            let str = matches[1].trim();
-
-            if (this.shouldIgnore(str)) continue;
-
-            if (this.shouldWarn(str)) {
-                warnings.push(`Warning for string: "${str}"`);
-                continue;
+    replace() {
+        // check for placeholder warning
+        // check warning characters and exclude from replacement
+        // replace
+        let count = 0
+        let replacer = new HtmlReplacer(this.prefix, this.suffix, this.content, true);
+        this.foundStrings.data.forEach((element) => {
+            let result = replacer.replace(element);
+            if (result) {
+                count++
             }
-
-            const replacement = `>${this.prefix}${str}${this.suffix}<`;
-            result = result.replace(`>${str}<`, replacement);
-        }
-
-        return { result, warnings };
-    }
-
-    shouldIgnore(str) {
-        for (let char of this.ignoreChars) {
-            if (str.includes(char)) return true;
-        }
-        return false;
+        })
+        // count and report
+        // return replaced content
+        return { data: replacer.getContent(), replaced: count}
     }
 
     shouldWarn(str) {
