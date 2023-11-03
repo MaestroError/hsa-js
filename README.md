@@ -10,5 +10,8 @@ npm publish
 
 - Hashtag extraction not working in input's values, make it work +
 - Placeholder extraction isn't working +
-- Replace found strings
-  - Problem with alt extraction, couldn't find
+- Replace found strings +
+  - Problem with alt extraction, couldn't find +
+- Create separated tests
+- Create report method and add count in it
+- Create usage examples

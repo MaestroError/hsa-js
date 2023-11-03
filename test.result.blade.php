@@ -11,7 +11,7 @@
     <!-- Simple string test -->
     <p>{{ __('Testing string') }}</p>
     <p>{{ __('Testing number 1245') }}</p>
-    
+
     <!-- Some ignoring characters test -->
     <p>{{ __('hastag double #') }}</p>
     <p>_underscore _</p>
@@ -45,7 +45,7 @@
     <!-- Hashtag extraction -->
     <input type="submit" value="{{ __('Send') }}" />
     <input type="submit" value=" {{ __('value') }}" />
-    <input type="submit" value=" {{ __('Recived') }}" />
+    <input type="submit" value="  {{ __('Recived') }}" />
     <!-- XX it ignores this string because of duplicate check - SOLVED! -->
     <p>{{ __('John but no quotes') }}</p>
 
@@ -62,7 +62,7 @@
 
     <!-- XX Didn't finds with regex - SOLVED! (new regex) -->
     <li>{{ __('Up to 5 users simultaneously') }}</li>
-    
+
     <!-- XX Didn't finds with regex - SOLVED! (new regex) -->
     <div class="ps-product__badge">
         <!-- XX Didn't finds with regex (v4) shorter then 4 -->
@@ -76,11 +76,11 @@
     <li>
         {{ __('Up to 5 users simultaneously') }}
     </li>
-    
+
     <p>Veelgestelde vragen over {{$serviceName}}</p>
 
     <!-- XX Not founds/replaces first part of string - SOLVED! (new extraction functions)  -->
-    <p> {{ __('Veelgestelde vragen over') }} 
+    <p> {{ __('Veelgestelde vragen over') }}
         <span>{{$serviceName}}</span>
     </p>
 

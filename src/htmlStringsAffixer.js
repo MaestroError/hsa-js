@@ -42,8 +42,8 @@ class HtmlStringsAffixer {
 
     // opening tag <-> opening tag text extraction
     extractTextOO() {
-        this.extPrefix = `(\<[^\/](.{0,10})\>)`;
-        this.extSuffix = `(\<[^\/](.{0,10})\>)`;
+        this.extPrefix = `(\\<[^\\/](.{0,10})\\>)`;
+        this.extSuffix = `(\\<[^\\/](.{0,10})\\>)`;
         this.generateRegex();
 	    // Parses content, sets regex flags and adds strings in foundStrings with specific type
         let htmlType = "text"
@@ -65,7 +65,7 @@ class HtmlStringsAffixer {
     // closing tag <-> opening tag text extraction
     extractTextCO() {
         this.extPrefix = `(\\<\\/[A-Za-z0-9]{0,10}\\>)`;
-        this.extSuffix = `(\<[^\/](.{0,10})\>)`;
+        this.extSuffix = `(\\<[^\\/](.{0,10})\\>)`;
         this.generateRegex();
 	    // Parses content, sets regex flags and adds strings in foundStrings with specific type
         let htmlType = "text"
@@ -77,7 +77,7 @@ class HtmlStringsAffixer {
     extractPlaceholder() {
         
         this.extPrefix = `placeholder\\s*=\\s*("|')`;
-        this.extSuffix = `(\"|')\\s*(\\/|>)`;
+        this.extSuffix = `(\\"|')\\s*(\\/|>)`;
         this.generateRegex();
 	    // Parses content, sets regex flags and adds strings in foundStrings with specific type
         let htmlType = "placeholder"
@@ -87,8 +87,8 @@ class HtmlStringsAffixer {
 
     // HTML img's alt attributes extraction method
     extractAlt() {
-        this.extPrefix = `alt=(\"|')`;
-        this.extSuffix = `(\"|')(\s|/|>)`;
+        this.extPrefix = `alt=(\\"|')`;
+        this.extSuffix = `(\\"|')(\\s|/|>)`;
         this.generateRegex();
 	    // Parses content, sets regex flags and adds strings in foundStrings with specific type
         let htmlType = "alt"
@@ -298,9 +298,12 @@ class HtmlStringsAffixer {
             }
         }
 
-        this.replace();
+        let replacer = this.replace();
+        this.content = replacer.data
 
-        console.log(this.foundStrings)
+        // Count? replacer.count
+
+        // console.log(this.foundStrings)
         // console.log(this.warnings)
         // console.log(this.content)
 
@@ -341,8 +344,8 @@ class HtmlStringsAffixer {
         })
         // count and report
         // return replaced content
-        console.log(replacer.getContent());
-        console.log(this.warnings);
+        // console.log(replacer.getContent());
+        // console.log(this.warnings);
         return { data: replacer.getContent(), replaced: count}
     }
 
