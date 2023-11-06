@@ -12,6 +12,6 @@ npm publish
 - Placeholder extraction isn't working +
 - Replace found strings +
   - Problem with alt extraction, couldn't find +
-- Create separated tests
+- Create separated tests +
 - Create report method and add count in it
 - Create usage examples
