@@ -16,14 +16,19 @@ class HtmlStringsAffixer {
             "hashtag"
         ];
 
-        // Properties
+        // Replacing Properties
         this.content = fileContent || ""
         this.originalContent = fileContent || ""
         this.extPrefix = ""
         this.extSuffix = ""
         this.searchRegex = ""
         this.foundStrings = {data: []}
+        // Reporting Properties
         this.warnings = []
+        this.countReplaced = 0
+        this.countFound = 0
+        this.countNotReplaced = 0
+        this.debug = config.debug || false
     }
     
 
@@ -274,7 +279,7 @@ class HtmlStringsAffixer {
 
     // Helpers END
 
-    affixIt(htmlText) {
+    affixIt(htmlText, report = false) {
         this.content = htmlText
         this.originalContent = htmlText
         if (this.content) {
@@ -298,15 +303,23 @@ class HtmlStringsAffixer {
             }
         }
 
+        // Replace and set new content
         let replacer = this.replace();
-        this.content = replacer.data
+        this.content = replacer.content
 
-        // Count? replacer.count
+        // Report
+        if (report) {
+            this.report()
+            return replacer
+        }
 
         // console.log(this.foundStrings)
         // console.log(this.warnings)
         // console.log(this.content)
 
+        // Reset warnings
+        this.warnings = []
+        // Return new content
         return this.content;
     }
 
@@ -314,11 +327,12 @@ class HtmlStringsAffixer {
         
         // replace
         let count = 0
-        let replacer = new HtmlReplacer(this.prefix, this.suffix, this.content, false);
+        let countEmptyOrNotReplaced = 0
+        let replacer = new HtmlReplacer(this.prefix, this.suffix, this.content, this.debug);
         // Loop over found strings
         this.foundStrings.data.forEach((element) => {
             let approved = true
-            let result;
+            let replaced;
 
             // Check "placeholder" placeholder
             if (element["found"].toLowerCase() == "placeholder") {
@@ -331,22 +345,67 @@ class HtmlStringsAffixer {
             let foundWarningChars = this.checkWarningCharacters(element)
 
             if (foundWarningChars.length > 0) {
-                this.warnings.push("Warning! Found " + foundWarningChars.toString() + " characters: " + element["found"] + " on line: " + element["line"]);
+                this.warnings.push("Warning! Found " + foundWarningChars.toString() + " characters: " + element["found"] + " on line: " + element["lines"]);
                 approved = false
             }
             
             if (approved) {
-                result = replacer.replace(element);
-                if (result) {
+                replaced = replacer.replace(element);
+                if (replaced) {
                     count++
+                } else {
+                    countEmptyOrNotReplaced++
                 }
             }
         })
-        // count and report
+        // counts for report
+        this.countReplaced = count
+        this.countFound = this.foundStrings.data.length
+        this.countNotReplaced = countEmptyOrNotReplaced
+
         // return replaced content
         // console.log(replacer.getContent());
         // console.log(this.warnings);
-        return { data: replacer.getContent(), replaced: count}
+        return { content: replacer.getContent(), report: this.reportData()}
+    }
+
+    report() {
+        // Report finding
+        if (this.countFound) {
+            console.log("Found strings amount: " + this.countFound);
+            if (this.debug) {
+                console.log(this.foundStrings)
+            }
+        }
+        // Report replacement
+        if (this.countReplaced) {
+            console.log("Replaced strings amount: " + this.countReplaced);
+        }
+        // Report empty
+        if (this.countNotReplaced) {
+            console.log("Skipped (not replaced and/or empty) strings amount: " + this.countNotReplaced);
+        }
+        // Report warnings
+        if (this.warnings.length) {
+            console.log("Strings with warning characters: " + this.warnings.length);
+            this.warnings.forEach((element, index) => {
+                console.warn(index+1 + ". " + element)
+            });
+        } else {
+            console.log("No warning characters found!");
+        }
+        // Reset warnings
+        this.warnings = []
+    }
+
+    reportData() {
+        return {
+            found: this.countFound,
+            replaced: this.countReplaced,
+            skipped: this.countNotReplaced,
+            warnings_amount: this.warnings.length,
+            warnings: this.warnings
+        }
     }
 
     shouldWarn(str) {
