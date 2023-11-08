@@ -15,5 +15,5 @@ npm publish
 - Create separated tests +
 - Create report method and add count in it +
 - Create usage examples +
-- Add testing in github actions
+- Add testing in github actions +
 - Write docs
