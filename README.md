@@ -14,6 +14,6 @@ npm publish
   - Problem with alt extraction, couldn't find +
 - Create separated tests +
 - Create report method and add count in it +
-- Create usage examples
+- Create usage examples +
 - Add testing in github actions
 - Write docs
