@@ -17,3 +17,4 @@ npm publish
 - Create usage examples +
 - Add testing in github actions +
 - Write docs
+- publish on NPM
