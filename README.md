@@ -81,15 +81,15 @@ npm i hsa-js
 
 HtmlStringsAffixer provides several configuration options, allowing for tailored usage according to specific requirements. Here's a detailed explanation of each configuration option:
 
-1.  **prefix**: This is a string that will be prepended to each extracted string. The prefix is an essential part of the localization process, as it defines how the translated string will be identified in your code. For instance, in a Laravel Blade template, this might be `{{ __('`, indicating the start of a translation function call.
+1.  **prefix** _(string)_: This is a string that will be prepended to each extracted string. The prefix is an essential part of the localization process, as it defines how the translated string will be identified in your code. For instance, in a Laravel Blade template, this might be `{{ __('`, indicating the start of a translation function call.
 
-2.  **suffix**: Complementing the prefix, this string is appended to each extracted string. Continuing the Laravel Blade example, the suffix would be `') }}`, closing the translation function call. The suffix, like the prefix, is crucial for correctly formatting the localized string in the code.
+2.  **suffix** _(string)_: Complementing the prefix, this string is appended to each extracted string. Continuing the Laravel Blade example, the suffix would be `') }}`, closing the translation function call. The suffix, like the prefix, is crucial for correctly formatting the localized string in the code.
 
-3.  **ignoreChars**: This option allows you to specify a set of characters that the HtmlStringsAffixer should ignore during the extraction process. These characters are typically ones that might interfere with the correct identification of strings to be localized. Common examples include symbols used in HTML or other markup languages, like `"#"` or `"_"`.
+3.  **ignoreChars** _(array)_: This option allows you to specify a set of characters that the HtmlStringsAffixer should ignore during the extraction process. These characters are typically ones that might interfere with the correct identification of strings to be localized. Common examples include symbols used in HTML or other markup languages, like `"#"` or `"_"`.
 
-4.  **warningChars**: These are characters that, when found in the extracted strings, will trigger warnings. This feature is particularly useful for identifying potential issues in your strings that might cause problems in the localization process. For instance, special characters like `"%"` or curly braces `"{"` and `"}"` might be part of non-translatable strings like math expressions. Provided warnings helps to manually check the strings.
+4.  **warningChars** _(array)_: These are characters that, when found in the extracted strings, will trigger warnings. This feature is particularly useful for identifying potential issues in your strings that might cause problems in the localization process. For instance, special characters like `"%"` or curly braces `"{"` and `"}"` might be part of non-translatable strings like math expressions. Provided warnings helps to manually check the strings.
 
-5.  **extractions**: This configuration defines the types of extractions (And relevant replacement) that HtmlStringsAffixer will perform. It's an array that can include different extraction types, such as:
+5.  **extractions** _(array)_: This configuration defines the types of extractions (And relevant replacement) that HtmlStringsAffixer will perform. It's an array that can include different extraction types, such as:
 
     - `"text"`: Extracts plain text from HTML or other templates.
     - `"placeholder"`: Specifically targets placeholder attributes in input elements.
@@ -138,6 +138,14 @@ const localizedContent = affixer.affixIt(bladeTemplateContent);
 console.log(localizedContent);
 ```
 
+Check the other usage [examples](https://github.com/MaestroError/hsa-js/tree/maestro/examples):
+
+- [blade](https://github.com/MaestroError/hsa-js/blob/maestro/examples/blade.example.js) template
+- [angular](https://github.com/MaestroError/hsa-js/blob/maestro/examples/angular.example.js) template
+- [react](https://github.com/MaestroError/hsa-js/blob/maestro/examples/react.example.js) template
+- [vue](https://github.com/MaestroError/hsa-js/blob/maestro/examples/vue.example.js) template
+- [report](https://github.com/MaestroError/hsa-js/blob/maestro/examples/report.example.js) (Returning report information)
+
 Usage via CDN and HTML:
 
 ```html
@@ -168,13 +176,7 @@ Usage via CDN and HTML:
 </script>
 ```
 
-Check the other usage [examples](https://github.com/MaestroError/hsa-js/tree/maestro/examples):
-
-- [blade](https://github.com/MaestroError/hsa-js/blob/maestro/examples/blade.example.js)
-- [angular](https://github.com/MaestroError/hsa-js/blob/maestro/examples/angular.example.js)
-- [react](https://github.com/MaestroError/hsa-js/blob/maestro/examples/react.example.js)
-- [vue](https://github.com/MaestroError/hsa-js/blob/maestro/examples/vue.example.js)
-- [report](https://github.com/MaestroError/hsa-js/blob/maestro/examples/report.example.js) (Returning report information)
+[html-examples](https://github.com/MaestroError/hsa-js/tree/maestro/html-examples):
 
 ## Contributing to hsa-js
 
