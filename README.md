@@ -176,7 +176,33 @@ Usage via CDN and HTML:
 </script>
 ```
 
-[html-examples](https://github.com/MaestroError/hsa-js/tree/maestro/html-examples):
+[html-examples](https://github.com/MaestroError/hsa-js/tree/maestro/html-examples)
+
+### Hashtag extraction
+
+If you need to replace only specific strings, just mark them with "#" and use "hashtag" extraction
+
+```javascript
+import HtmlStringsAffixer from "hsa-js";
+
+// Example of using HtmlStringsAffixer in a Laravel Blade template
+const bladeTemplateContent = `
+    <div>
+        <h1>#Welcome to our website</h1>
+        <a href="/contact">Contact us</a>
+    </div>
+`;
+
+const affixer = new HtmlStringsAffixer({
+  prefix: "{{ __('", // Prefix to add before string
+  suffix: "') }}", // Suffix to add after string
+  extractions: [
+    "hashtag", // only strings starting with "#" wil be replaced
+  ],
+});
+const localizedContent = affixer.affixIt(bladeTemplateContent);
+console.log(localizedContent);
+```
 
 ## Contributing to hsa-js
 
