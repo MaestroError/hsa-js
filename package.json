@@ -2,7 +2,7 @@
   "name": "hsa-js",
   "version": "1.0.0",
   "description": "html-strings-affixer adapted to JS - simplifying finding HTML string and replacing with affixed one",
-  "main": "dist/hsa.js",
+  "main": "src/htmlStringsAffixer.js",
   "scripts": {
     "test": "jest"
   },
@@ -34,6 +34,6 @@
     "webpack-cli": "^5.1.4"
   },
   "files": [
-    "dist/hsa.js"
+    "src/*.js"
   ]
 }

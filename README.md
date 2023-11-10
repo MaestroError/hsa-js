@@ -131,7 +131,7 @@ Check the other usage [examples](https://github.com/MaestroError/hsa-js/tree/mae
 - [angular](https://github.com/MaestroError/hsa-js/blob/maestro/examples/angular.example.js)
 - [react](https://github.com/MaestroError/hsa-js/blob/maestro/examples/react.example.js)
 - [vue](https://github.com/MaestroError/hsa-js/blob/maestro/examples/vue.example.js)
-- [report](https://github.com/MaestroError/hsa-js/blob/maestro/examples/report.example.js) (Retriving report inforamtion)
+- [report](https://github.com/MaestroError/hsa-js/blob/maestro/examples/report.example.js) (Returning report information)
 
 ## Contributing to hsa-js
 
@@ -191,6 +191,6 @@ Your contributions, whether they're bug reports, feature requests, or code, play
 - Create report method and add count in it +
 - Create usage examples +
 - Add testing in github actions +
-- Write docs
+- Write docs +
 - publish on NPM
   - To publish on NPM: `npm login` `npm publish`
