@@ -4,6 +4,14 @@
 
 hsa-js is a dynamic JavaScript utility designed to streamline the localization process of HTML-based templates and web content. It automates the task of identifying and affixing localization tokens around text strings within HTML, making the process of preparing web pages for translation both efficient and error-free.
 
+### Navigation
+
+- [The first HSA](#the-first-hsa)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [Contribution](#contributing-to-hsa-js)
+
 ### Main Features
 
 - **Automated Text Extraction**: Automatically identifies (visible) text strings within HTML content that require localization.
