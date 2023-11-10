@@ -8,13 +8,17 @@
 </head>
 <body>
 
-    <div id="content">
-
+    <div>
+        <h4>Template</h4>
+        <div id="template"></div>
+        <h4>Localized Template</h4>
+        <div id="content"></div>
     </div>
 
     <script>
-        // const HtmlStringsAffixer = window.HtmlStringsAffixer;
-       // Example of using HtmlStringsAffixer for a Laravel Blade template
+        // Example of using HtmlStringsAffixer in html
+        const HsaJs = window.hsaJs.default;
+
         const bladeTemplateContent = `
             <div>
                 <h1>Welcome to our website</h1>
@@ -23,7 +27,7 @@
             </div>
         `;
 
-        const affixer = new hsaJs({
+        const affixer = new HsaJs({
             prefix: "{{ __('",
             suffix: "') }}",
             extractions: [
@@ -32,7 +36,8 @@
         });
         const localizedContent = affixer.affixIt(bladeTemplateContent);
         console.log(localizedContent);
-        document.getElementById("content").innerHTML = localizedContent
+        document.getElementById("template").textContent = bladeTemplateContent
+        document.getElementById("content").textContent = localizedContent
 
     </script>
 </body>
