@@ -57,10 +57,25 @@ In contrast, the new `hsa.js` is a more versatile tool, designed for Node.js and
 
 ## Installation
 
-@todo
-Via NPM:
+#### Via NPM:
 
-Via CDN:
+```
+npm i hsa-js
+```
+
+#### Via CDN
+
+**jsDelivr**
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/hsa-js@latest"></script>
+```
+
+**unpkg**
+
+```html
+<script src="https://unpkg.com/browse/hsa-js/src/htmlStringsAffixer.js"></script>
+```
 
 ## Configuration
 
@@ -100,10 +115,8 @@ const affixer = new HtmlStringsAffixer({
 
 Basic usage example:
 
-_@todo update import_
-
 ```javascript
-import HtmlStringsAffixer from "./../src/htmlStringsAffixer.js";
+import HtmlStringsAffixer from "hsa-js";
 
 // Example of using HtmlStringsAffixer in a Laravel Blade template
 const bladeTemplateContent = `

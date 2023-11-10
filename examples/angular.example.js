@@ -1,3 +1,5 @@
+// Use import from "hsa-js"
+// import HtmlStringsAffixer from "hsa-js";
 import HtmlStringsAffixer from './../src/htmlStringsAffixer.js';
 
 // Example of using HtmlStringsAffixer in an Angular template

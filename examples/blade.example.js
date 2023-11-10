@@ -1,6 +1,8 @@
+// Use import from "hsa-js"
+// import HtmlStringsAffixer from "hsa-js";
 import HtmlStringsAffixer from './../src/htmlStringsAffixer.js';
 
-// Example of using HtmlStringsAffixer in a Laravel Blade template
+// Example of using HtmlStringsAffixer for a Laravel Blade template
 const bladeTemplateContent = `
     <div>
         <h1>Welcome to our website</h1>

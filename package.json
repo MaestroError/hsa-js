@@ -4,6 +4,7 @@
   "description": "html-strings-affixer adapted to JS - simplifying finding HTML string and replacing with affixed one",
   "main": "src/htmlStringsAffixer.js",
   "scripts": {
+    "build": "webpack --mode production",
     "test": "jest"
   },
   "type": "module",

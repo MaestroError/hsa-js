@@ -1,6 +1,8 @@
+// Use import from "hsa-js"
+// import HtmlStringsAffixer from "hsa-js";
 import HtmlStringsAffixer from './../src/htmlStringsAffixer.js';
 
-// Example of using HtmlStringsAffixer in a Vue.js template
+// Example of using HtmlStringsAffixer for a Vue.js template
 const vueTemplateContent = `
     <template>
         <div>

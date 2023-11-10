@@ -1,4 +1,4 @@
-import HtmlStringsAffixer from './htmlStringsAffixer.js';
+import HtmlStringsAffixer from './src/htmlStringsAffixer.js';
 import fs from 'fs/promises';
 
 describe('HtmlStringsAffixer', () => {

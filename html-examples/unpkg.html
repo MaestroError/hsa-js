@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNPKG</title>
+    <script src="https://unpkg.com/hsa-js/src/htmlStringsAffixer.js"></script>
+</head>
+<body>
+
+    <div id="content">
+
+    </div>
+
+    <script>
+        const HtmlStringsAffixer = window.HtmlStringsAffixer;
+       // Example of using HtmlStringsAffixer for a Laravel Blade template
+        const bladeTemplateContent = `
+            <div>
+                <h1>Welcome to our website</h1>
+                <p>{{stayEnjoyment}}</p>
+                <a href="/contact">Contact us</a>
+            </div>
+        `;
+
+        const affixer = new HtmlStringsAffixer({
+            prefix: "{{ __('",
+            suffix: "') }}",
+            extractions: [
+                "text",
+            ],
+        });
+        const localizedContent = affixer.affixIt(bladeTemplateContent);
+        console.log(localizedContent); 
+
+    </script>
+</body>
+</html>
