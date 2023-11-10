@@ -138,6 +138,36 @@ const localizedContent = affixer.affixIt(bladeTemplateContent);
 console.log(localizedContent);
 ```
 
+Usage via CDN and HTML:
+
+```html
+<script src="https://unpkg.com/hsa-js/dist/hsa.js"></script>
+
+<script>
+  // Example of using HtmlStringsAffixer in html
+  const bladeTemplateContent = `
+            <div>
+                <h1>Welcome to our website</h1>
+                <p>{{stayEnjoyment}}</p>
+                <a href="/contact">Contact us</a>
+            </div>
+        `;
+
+  // Init from hsaJs module
+  const affixer = new window.hsaJs.default({
+    prefix: "{{ __('",
+    suffix: "') }}",
+    extractions: ["text"],
+  });
+
+  // Run affixIt method using template string as argument
+  const localizedContent = affixer.affixIt(bladeTemplateContent);
+
+  // Log replaced content
+  console.log(localizedContent);
+</script>
+```
+
 Check the other usage [examples](https://github.com/MaestroError/hsa-js/tree/maestro/examples):
 
 - [blade](https://github.com/MaestroError/hsa-js/blob/maestro/examples/blade.example.js)
