@@ -1,6 +1,6 @@
 {
   "name": "hsa-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "html-strings-affixer adapted to JS - simplifying finding HTML string and replacing with affixed one",
   "main": "src/htmlStringsAffixer.js",
   "scripts": {
