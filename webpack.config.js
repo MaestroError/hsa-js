@@ -9,7 +9,7 @@ export default {
   output: {
     filename: 'hsa.js',
     path: path.resolve(__dirname, 'dist'),
-    library: 'hsa-js',
+    library: 'hsaJs',
     libraryTarget: 'umd',
     globalObject: 'this'
   },

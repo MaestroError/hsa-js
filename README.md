@@ -74,7 +74,7 @@ npm i hsa-js
 **unpkg**
 
 ```html
-<script src="https://unpkg.com/browse/hsa-js/src/htmlStringsAffixer.js"></script>
+<script src="https://unpkg.com/hsa-js/dist/hsa.js"></script>
 ```
 
 ## Configuration
