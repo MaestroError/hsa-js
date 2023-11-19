@@ -11,6 +11,7 @@ hsa-js is a dynamic JavaScript utility designed to streamline the localization p
 - [Configuration](#configuration)
 - [Usage](#usage)
 - [Contribution](#contributing-to-hsa-js)
+- [Support](#support)
 
 ### Main Features
 
@@ -247,6 +248,14 @@ Contributing directly to the codebase is a great way to help improve HtmlStrings
 - **Join Discussions**: Participate in discussions and provide feedback on proposed changes or features.
 
 Your contributions, whether they're bug reports, feature requests, or code, play a significant role in the development of HtmlStringsAffixer. Together, we can build a tool that's more powerful, efficient, and user-friendly. Thank you for your support and involvement!
+
+## Support
+
+Support Our Work? 🌟 You can help us keep the code flowing by making a small donation. Every bit of support goes a long way in maintaining and improving our open-source contributions. Click the button below to contribute. Thank you for your generosity!
+
+[![buy me a milk](https://github.com/MaestroError/resources/blob/maestro/buymeamilk/green.png)](https://www.buymeacoffee.com/maestroerror)
+
+---
 
 ### Known issues
 
