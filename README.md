@@ -254,7 +254,10 @@ Your contributions, whether they're bug reports, feature requests, or code, play
 Support Our Work? 🌟 You can help us keep the code flowing by making a small donation. Every bit of support goes a long way in maintaining and improving our open-source contributions. Click the button below to contribute. Thank you for your generosity!
 
 [<img src="https://github.com/MaestroError/resources/blob/maestro/buymeamilk/green-2.png" width="300px">](https://www.buymeacoffee.com/maestroerror)
-[<img src="https://github.com/MaestroError/resources/blob/maestro/buymeamilk/qr-code.png" width="200px">](https://www.buymeacoffee.com/maestroerror)
+
+Or use QR code:
+
+[<img src="https://github.com/MaestroError/resources/blob/maestro/buymeamilk/qr-code.png" width="120px">](https://www.buymeacoffee.com/maestroerror)
 
 ---
 
