@@ -264,3 +264,7 @@ Or use QR code:
 ### Known issues
 
 - While using hashtag ("#") extraction, it stops on " and ' characters, so `#John with "double"` will be replaced as `{{ __('John with') }} "double"`
+
+##### To Do:
+
+- Add the "convert to keys" feature
